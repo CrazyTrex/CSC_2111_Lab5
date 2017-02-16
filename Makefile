@@ -11,18 +11,15 @@ LDFLAGS = -Wl,-Bstatic
 LIBS = $(LDFLAGS) -lCSC2110 -lrandom -lGUI -lwxmsw31u_core -lwxbase31u -lgdi32
 
 COMPILE = $(CC) $(CXXFLAGS) $(INC_DIRS) -c 
-LINK = $(CC) $(CXXFLAGS) $(LIB_DIRS)
+LINK = $(CC) $(CXXFLAGS) $(LIB_DIRS) -o
 
-FILES = ModelColumns.o SortedListBoxDriver.o
-EXECUTABLE = SortedListBox.exe
+FILES = SortedListLinkedDriver.o
+EXECUTABLE = SortedList.exe
 
 all: Project
 
 Project: 		$(FILES)
 			$(LINK) $(EXECUTABLE) $(FILES) $(LIBS)
 
-ModelColumns.o:		ModelColumns.h ModelColumns.cpp
-			$(COMPILE) ModelColumns.cpp
-
-SortedListBoxDriver.o:	ListBox.h NextNode.h SortedListLinked.h SortedListBoxDriver.cpp 
-			$(COMPILE) SortedListBoxDriver.cpp
+SortedListLinkedDriver.o:	NextNode.h SortedListLinked.h  
+			$(COMPILE) SortedListLinkedDriver.cpp

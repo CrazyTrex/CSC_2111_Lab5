@@ -1,3 +1,8 @@
+/*
+	Jignesh Patel & Adam Rucker
+	2/16/2017
+	Lab 5/ SortedListLinked Lab
+*/	
 #if !defined (SORTEDLISTLINKED_H)
 #define SORTEDLISTLINKED_H
 
@@ -26,7 +31,15 @@ class SortedListLinked
       ~SortedListLinked();
       bool isEmpty();
       int size(); 
+	  /*
+		Pre: Receives an T* item
+		Post: Adds the T* item to the SortedListLinked where it is supposed to go based on the value_comp
+		*/
       void add(T* item);
+	  /*
+		Pre: Receives a T* item
+		Post: Finds the item in the list to remove it or ends without removing an item if not found
+		*/
       void remove(T* item);  //normally, we would use void remove(String* search_key) here
       T* get(int index);     //normally, we would use T* get(String* search_key)
       ListLinkedIterator<T>* iterator();
@@ -101,18 +114,23 @@ NextNode<T>** SortedListLinked<T>::find(T* item)
 {
    NextNode<T>* prev = NULL;
    NextNode<T>* curr = head;
-
+   bool found = false;
    //DO THIS
    //loop to find the correct location to insert/remove item
-
-
-
-
-
-
-
-
-
+   while(curr != NULL && found == false)
+   {
+	   int compare = (*compare_items)(item, curr->getItem());
+	   if(compare == 0)
+		   found = true;
+	   else if(compare < 0)
+		   found = true;
+	   else
+	   {
+		   prev = curr;
+		   curr = curr->getNext();
+		}
+   }
+   
    //could simply return prev and compute curr, but prev might be null
    //this way results in somewhat simpler code in add and remove
    NextNode<T>** nodes = new NextNode<T>*[2];
@@ -142,19 +160,15 @@ void SortedListLinked<T>::add(T* item)
 
    //DO THIS
    //adding to the top of the list (check prev)
-   if (           )
+   if (prev == NULL)
    {
-
-
-
-
+	   node->setNext(head);
+	   head = node;
    }
    else    //general add
    {
-
-
-
-
+	   prev->setNext(node);
+	   node->setNext(curr);
    }
 
    sze++;
@@ -185,28 +199,27 @@ void SortedListLinked<T>::remove(T* item)
 
    //this is how to use the function pointer
    int compare = (*compare_items) (item, curr->getItem());
-
+	/* Testing output to make sure the compare works and the sze is not changing prior to deleting the item
+	cout<<compare<<endl;
+   cout<<sze<<endl;
+   */
    //determine whether the item to be removed is present
-   if (                       )
+   if (compare != 0)
    {
       return;  //item not present
    }
-
+   
    //DO THIS
    //removing the top item (check prev)
-   if (         )
+   if (prev == NULL)
    {
-
-
-
-
+		NextNode<T>* after = curr->getNext();
+		head = after;
    }
    else  //general remove
    {
-
-
-
-
+	   NextNode<T>* after = curr->getNext();
+	   prev->setNext(after);
    }
 
    delete curr;
